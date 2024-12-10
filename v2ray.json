@@ -1,0 +1,73 @@
+{
+    "log": {
+      "access": "/var/log/v2ray/access.log",
+      "error": "/var/log/v2ray/error.log",
+      "loglevel": "info"
+    },
+    "dns": {
+      "servers": ["1.1.1.1", "8.8.8.8"]
+    },
+    "inbounds": [
+      {
+        "port": 1080,
+        "listen": "0.0.0.0",
+        "protocol": "socks",
+        "settings": {
+          "auth": "noauth",
+          "udp": true
+        }
+      }
+    ],
+    "outbounds": [
+      {
+        "protocol": "vless",
+        "settings": {
+          "vnext": [
+            {
+              "address": "x.custom-config.com",
+              "port": 2087,
+              "users": [
+                {
+                  "id": "2119b073-0f15-45fa-c517-e7be814c294c",
+                  "encryption": "none",
+                  "flow": ""
+                }
+              ]
+            }
+          ]
+        },
+        "streamSettings": {
+          "network": "tcp",
+          "security": "none",
+          "tcpSettings": {
+            "header": {
+              "type": "http",
+              "request": {
+                "version": "1.1",
+                "method": "GET",
+                "path": ["/"],
+                "headers": {
+                  "Host": ["www.speedtest.net"],
+                  "User-Agent": ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"],
+                  "Accept-Encoding": ["gzip, deflate"],
+                  "Connection": ["keep-alive"],
+                  "Pragma": "no-cache",
+                  "Cache-Control": "no-cache"
+                }
+              }
+            }
+          }
+        },
+        "tag": "@Free_HTTPCustom-C63"
+      }
+    ],
+    "routing": {
+      "rules": [
+        {
+          "type": "field",
+          "ip": ["geoip:private"],
+          "outboundTag": "blocked"
+        }
+      ]
+    }
+}
